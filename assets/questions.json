@@ -1,0 +1,49 @@
+[{
+    "Question" :"What command do you use to commit using git?",
+    "Answer" : "Git commit"
+},{
+    "Question" :"What is a popular package manager used for a mac?",
+    "Answer" : " Homebrew"
+},{
+    "Question" :"What does the linux command ls do?",
+    "Answer" : "List files in current directory"
+},{
+    "Question" :"What OS is chocolatey used on??",
+    "Answer" : "Windows"
+},{
+    "Question" :"What does mkdir do as a linux command?",
+    "Answer" : "Make a directory"
+},{
+    "Question" :"What is a docker container?",
+    "Answer" : "A isolated enviroment for running an app"
+},{
+    "Question" :"How would you check your node version?",
+    "Answer" : "node -v"
+},{
+    "Question" :"What is docker?",
+    "Answer" : "A platform for building running and shipping containers"
+},{
+    "Question" :"`Does linux use forward slashes or back slashes?",
+    "Answer" : "Forward"
+},{
+    "Question" :"What does CD linux command do?",
+    "Answer" : "Change directory"
+},{
+    "Question" :"What GIT command would you use to create a directory?",
+    "Answer" : "Git init"
+},{
+    "Question" :"What is GIT??",
+    "Answer" : "A version control system"
+},{
+    "Question" :"What is kubernetes used for?",
+    "Answer" : "Application deployment"
+},{
+    "Question" :"What is the fastest way to find anything on a MAC?",
+    "Answer" : "command + space"
+},{
+    "Question" :"What is NPM?",
+    "Answer" : "Node package manager"
+}
+]
+
+
