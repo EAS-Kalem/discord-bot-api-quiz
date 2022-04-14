@@ -1,49 +1,63 @@
 [{
     "Question" :"What command do you use to commit using git?",
-    "Answer" : "Git commit"
+    "Answer" : "Git commit",
+    "Topic": "Git"
 },{
     "Question" :"What is a popular package manager used for a mac?",
-    "Answer" : " Homebrew"
+    "Answer" : " Homebrew",
+    "Topic": "General"
 },{
     "Question" :"What does the linux command ls do?",
-    "Answer" : "List files in current directory"
+    "Answer" : "List files in current directory",
+    "Topic": "Linux"
 },{
     "Question" :"What OS is chocolatey used on??",
-    "Answer" : "Windows"
+    "Answer" : "Windows",
+    "Topic": "General"
 },{
     "Question" :"What does mkdir do as a linux command?",
-    "Answer" : "Make a directory"
+    "Answer" : "Make a directory",
+    "Linux": "Git"
 },{
     "Question" :"What is a docker container?",
-    "Answer" : "A isolated enviroment for running an app"
+    "Answer" : "A isolated enviroment for running an app",
+    "Topic": "General"
 },{
     "Question" :"How would you check your node version?",
-    "Answer" : "node -v"
+    "Answer" : "node -v",
+    "Topic": "Node"
 },{
     "Question" :"What is docker?",
-    "Answer" : "A platform for building running and shipping containers"
+    "Answer" : "A platform for building running and shipping containers",
+    "Topic": "Docker"
 },{
     "Question" :"`Does linux use forward slashes or back slashes?",
-    "Answer" : "Forward"
+    "Answer" : "Forward",
+    "Topic": "Linux"
 },{
     "Question" :"What does CD linux command do?",
-    "Answer" : "Change directory"
+    "Answer" : "Change directory",
+    "Topic": "Linux"
 },{
     "Question" :"What GIT command would you use to create a directory?",
-    "Answer" : "Git init"
+    "Answer" : "Git init",
+    "Topic": "Git"
 },{
     "Question" :"What is GIT??",
-    "Answer" : "A version control system"
+    "Answer" : "A version control system",
+    "Topic": "Git"
 },{
     "Question" :"What is kubernetes used for?",
-    "Answer" : "Application deployment"
+    "Answer" : "Application deployment",
+    "Topic" : "Kubernetes"
 },{
     "Question" :"What is the fastest way to find anything on a MAC?",
-    "Answer" : "command + space"
+    "Answer" : "command + space",
+    "Topic" : "General"
 },{
     "Question" :"What is NPM?",
-    "Answer" : "Node package manager"
-}
-]
+    "Answer" : "Node package manager",
+    "Topic": "Node"
+}]
 
 

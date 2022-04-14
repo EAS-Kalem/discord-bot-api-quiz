@@ -12,7 +12,24 @@ let quizRepo = {
             }
         });
     },  
-    
+
+
+
+
+    getById: function (id, resolve, reject) {
+        fs.readFile(SCORES_FILE, function (err, data) {
+            if (err) {
+                reject(err);
+            }
+            else {
+                let name = JSON.parse(data).find(p => p.id == id);
+                resolve(name)
+            }
+        });
+    },
+
+
+
     insert: function (newData, resolve, reject) {
         fs.readFile(QUESTIONS_FILE, function (err, data) {
             if (err) {
