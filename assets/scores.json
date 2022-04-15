@@ -1,34 +1,34 @@
 [
     {
-        "id": "Kaine",
+        "name": "Kaine",
         "TotalQuestions": 0,
         "TotalScore": 0
     },{
-        "id": "Kalem",
+        "name": "Kalem",
         "TotalQuestions": 0,
         "TotalScore": 0
     },{
-        "id": "Harrison",
+        "name": "Harrison",
         "TotalQuestions": 0,
         "TotalScore": 0
     },{
-        "id": "Rhys",
+        "name": "Rhys",
         "TotalQuestions": 0,
         "TotalScore": 0
     },{
-        "id": "Dave",
+        "name": "Dave",
         "TotalQuestions": 0,
         "TotalScore": 0
     },{
-        "id": "Ethan",
+        "name": "Ethan",
         "TotalQuestions": 0,
         "TotalScore": 0
     },{
-        "id": "Max",
+        "name": "Max",
         "TotalQuestions": 0,
         "TotalScore": 0
     },{
-        "id": "Clark",
+        "name": "Clark",
         "TotalQuestions": 0,
         "TotalScore": 0
     }
