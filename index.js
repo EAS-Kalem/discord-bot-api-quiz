@@ -5,7 +5,21 @@ let quizRepo = require("./repos/quizRepo")
 const app = express();
 app.use(express.json());
 
+const { Sequelize } = require('sequelize');
 
+
+
+let timeout;
+
+
+
+function timeoutFunction() {
+    timeout = setTimeout(nextQuestion, 3000);
+}
+
+function nextQuestion() {
+    return ("data")
+}
 //DESCRIPTION: Get all questions
 //USE: GET http://localhost:3000/api
 //TODO: **Admin only functionality to be added**
@@ -48,16 +62,29 @@ router.get('/searchscore', function (req, res, next) {
 // USE: GET http://localhost:3000/api/searchtopic/?topic=node
 // TODO: **Only display 5 questions to be added***
 router.get('/searchtopic', function (req, res, next) {
+    let topicArray;
     let searchObject = {
         "topic": req.query.topic
     };
     quizRepo.searchTopic(searchObject, function (data) {
+        topicArray = data
+        let askMe 
+        for (i = 0; i < 15; i++) {
+            if (topicArray[i].asked == "false") {
+               askMe = topicArray[i]
+            }
+            if (topicArray[i].asked == "true") {
+                console.log('used')
+            }
+        
         res.status(200).json({
             "status": 200,
             "statusText": "OK",
             "message": "A " + req.query.topic + " quiz was created",
-            "data": data
+            "data": askMe
         });
+    }
+        timeoutFunction()
 
     }, function (err) {
         next(err);
@@ -65,6 +92,8 @@ router.get('/searchtopic', function (req, res, next) {
 });
 
 
+setTimeout(function () {
+}, 3000);
 // DESCRIPTION: Add questions to questions.json 
 // USE: POST http://localhost:3000/api
 // TODO: **Skill tag only functionality to be added (node questions can be added by users with the node tag)***
@@ -83,7 +112,7 @@ router.post('/', function (req, res, next) {
 
 
 app.use('/api/', router);
-app.listen(3000, () => {
-    console.log('Node server is running on port 3000');
+app.listen(4000, () => {
+    console.log('Node server is running on port 4000');
 })
 

@@ -1,35 +1,35 @@
 [
     {
         "name": "Kaine",
-        "TotalQuestions": 0,
-        "TotalScore": 0
+        "totalQuestions": 0,
+        "totalScore": 0
     },{
         "name": "Kalem",
-        "TotalQuestions": 0,
-        "TotalScore": 0
+        "totalQuestions": 0,
+        "totalScore": 0
     },{
         "name": "Harrison",
-        "TotalQuestions": 0,
-        "TotalScore": 0
+        "totalQuestions": 0,
+        "totalScore": 0
     },{
         "name": "Rhys",
-        "TotalQuestions": 0,
-        "TotalScore": 0
+        "totalQuestions": 0,
+        "totalScore": 0
     },{
         "name": "Dave",
-        "TotalQuestions": 0,
-        "TotalScore": 0
+        "totalQuestions": 0,
+        "totalScore": 0
     },{
         "name": "Ethan",
-        "TotalQuestions": 0,
-        "TotalScore": 0
+        "totalQuestions": 0,
+        "totalScore": 0
     },{
         "name": "Max",
-        "TotalQuestions": 0,
-        "TotalScore": 0
+        "totalQuestions": 0,
+        "totalScore": 0
     },{
         "name": "Clark",
-        "TotalQuestions": 0,
-        "TotalScore": 0
+        "totalQuestions": 0,
+        "totalScore": 0
     }
 ]
