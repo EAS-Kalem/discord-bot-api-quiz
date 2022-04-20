@@ -1,7 +1,7 @@
 const express = require('express')
 const res = require("express/lib/response");
 let router = express.Router();
-let quizRepo = require("./repos/quizRepo")
+let quizRepo = require("../repos/quizRepo")
 const app = express();
 app.use(express.json());
 
