@@ -3,10 +3,10 @@ const QUESTIONS_FILE = './assets/questions.json'
 const SCORES_FILE = './assets/scores.json'
 let quizRepo = {
 
-    
-//DESCRIPTION: Get all questions
-//USE: GET http://localhost:3000/api
-//TODO: **Admin only functionality to be added**
+
+    //DESCRIPTION: Get all questions
+    //USE: GET http://localhost:3000/api
+    //TODO: **Admin only functionality to be added**
     get: function (resolve, reject) {
         fs.readFile(QUESTIONS_FILE, function (err, data) {
             if (err) {
@@ -19,9 +19,9 @@ let quizRepo = {
     },
 
 
-//DESCRIPTION: Search score and total answered questions for the user
-//USE: GET http://localhost:3000/api/searchscore/?name=kalem
-//TODO: **Categorise based on percentage answered right (Noob, Student, Wise & Veteran)**
+    //DESCRIPTION: Search score and total answered questions for the user
+    //USE: GET http://localhost:3000/api/searchscore/?name=kalem
+    //TODO: **Categorise based on percentage answered right (Noob, Student, Wise & Veteran)**
     searchScores: function (searchObject, resolve, reject) {
         fs.readFile(SCORES_FILE, function (err, data) {
             if (err) {
@@ -39,30 +39,42 @@ let quizRepo = {
     },
 
 
-// DESCRIPTION: Search questions.json for questions of a certian topic e.g. "node", "git"
-// USE: GET http://localhost:3000/api/searchtopic/?topic=node
-// TODO: **Only display 5 questions to be added***
+    // DESCRIPTION: Search questions.json for questions of a certian topic e.g. "node", "git"
+    // USE: GET http://localhost:3000/api/searchtopic/?topic=node
+    // TODO: **Only display 5 questions to be added***
     searchTopic: function (searchObject, resolve, reject) {
         fs.readFile(QUESTIONS_FILE, function (err, data) {
             if (err) {
                 reject(err);
             }
             else {
+                toBeAsked = []
                 let questions = JSON.parse(data);
                 if (searchObject) {
-                  questions = questions.filter(
-                       d => (searchObject.topic ? d.topic.toLowerCase().indexOf(searchObject.topic.toLowerCase()) >= 0 : true))
+                    questions = questions.filter(
+                        d => (searchObject.topic ? d.topic.toLowerCase().indexOf(searchObject.topic.toLowerCase()) >= 0 : true))
+
+                    for (i = 0; i < questions.length; i++) {
+                        if (questions[i].asked == false) {
+                            toBeAsked.push(questions[i]) 
+                        }
+                    }
+                    for (i = 0; i < 5; i++){
+                        if(toBeAsked[i].asked == false){
+                            resolve(toBeAsked[i].question)
+                        }
+                        
+
+                    }
                 }
-                
-                resolve(questions);
             }
         });
     },
 
 
-// DESCRIPTION: Add questions to questions.json 
-// USE: POST http://localhost:3000/api
-// TODO: **Skill tag only functionality to be added (node questions can be added by users with the node tag)***
+    // DESCRIPTION: Add questions to questions.json 
+    // USE: POST http://localhost:3000/api
+    // TODO: **Skill tag only functionality to be added (node questions can be added by users with the node tag)***
     insert: function (newData, resolve, reject) {
         fs.readFile(QUESTIONS_FILE, function (err, data) {
             if (err) {

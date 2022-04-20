@@ -62,34 +62,22 @@ router.get('/searchscore', function (req, res, next) {
 // USE: GET http://localhost:3000/api/searchtopic/?topic=node
 // TODO: **Only display 5 questions to be added***
 router.get('/searchtopic', function (req, res, next) {
-    let topicArray;
     let searchObject = {
         "topic": req.query.topic
     };
     quizRepo.searchTopic(searchObject, function (data) {
-        topicArray = data
-        let askMe 
-        for (i = 0; i < 15; i++) {
-            if (topicArray[i].asked == "false") {
-               askMe = topicArray[i]
-            }
-            if (topicArray[i].asked == "true") {
-                console.log('used')
-            }
-        
         res.status(200).json({
             "status": 200,
             "statusText": "OK",
             "message": "A " + req.query.topic + " quiz was created",
-            "data": askMe
+            "data": data
         });
-    }
-        timeoutFunction()
-
+       
     }, function (err) {
         next(err);
     });
 });
+
 
 
 setTimeout(function () {
