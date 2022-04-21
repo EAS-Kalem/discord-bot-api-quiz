@@ -12,19 +12,36 @@ connection.connect();
 
 
 let sqlRepo = {
-  //get all Questions
+  //GET ALL QUESTIONS
+  //GET from quiz_table DB
   get: function (resolve, reject) {
     connection.query("SELECT * FROM quiz_table", function (err, result, fields) {
       if (err) {
         reject(err)
       }
       resolve(result);
+      console.log(result);
     });
 
   },
-  //get 5 quiz questions by topic
-  getByTopic: function (topic, resolve, reject) {
+  //GET INDIVIDUAL DATA
+  //GET from individual_table DB
+  searchIndividual: function (individual, resolve, reject) {
+    connection.query(`SELECT * FROM individual_table WHERE individual="${individual}"`, function (err, result, fields) {
+      if (err) {
+        reject(err)
+      }
+      if (individual) {
+        questions = questions.filter(
+          d => (individual ? d.individual.toLowerCase().indexOf(individual.toLowerCase()) >= 0 : true))
+      }
+      resolve(result);
+    });
+  },
 
+  //GET 5 QUIZ QUESTIONS BY TOPIC
+  //GET from quiz_table DB
+  searchTopic: function (topic, resolve, reject) {
     connection.query(`SELECT * FROM quiz_table WHERE topic="${topic}"`, function (err, result, fields) {
       if (err) {
         reject(err)
@@ -50,6 +67,19 @@ let sqlRepo = {
 
     });
 
+    // },
+    // insert: function (newQuestion, resolve, reject) {
+    //   const myArray = newQuestion.split("+");
+    //   console.log(myArray[0]);
+    //   connection.query(`INSERT quiz_table 
+    //   (question, answer, topic, asked)  
+    //   VALUES
+
+//     resolve(result);
+//   });
+// },
+
   }
+};
 
 module.exports = sqlRepo
