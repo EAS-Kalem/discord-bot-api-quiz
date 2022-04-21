@@ -1,7 +1,7 @@
 const express = require('express')
 const res = require("express/lib/response");
 let router = express.Router();
-let test = require("./repos/test1")
+let test = require("./repos/fake")
 const app = express();
 app.use(express.json());
 const bodyParser = require("body-parser");

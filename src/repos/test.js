@@ -47,8 +47,11 @@ let sqlRepo = {
         reject(err)
       }
       if (topic) {
-        questions = questions.filter(
-          d => (topic ? d.topic.toLowerCase().indexOf(topic.toLowerCase()) >= 0 : true))
+        waiting = "true"
+        toBeAsked = [{"asked": "false"}]
+        questions = []
+         questions.push(topic)
+          d => (topic ? d.topic.toLowerCase().indexOf(topic.toLowerCase()) >= 0 : true)
 
         for (i = 0; i < questions.length; i++) {
           if (questions[i].asked == false) {
@@ -57,11 +60,11 @@ let sqlRepo = {
         }
         for (i = 0; i < 5; i++) {
           if (toBeAsked[i].asked == false) {
-            resolve(toBeAsked[i].question)
+            console.log(toBeAsked[i])
           }
+          console.log(toBeAsked[i])
+         return (toBeAsked[i])
 
-
-          resolve(result);
         }
       }
 
