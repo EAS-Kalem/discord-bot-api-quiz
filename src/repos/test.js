@@ -47,26 +47,25 @@ let sqlRepo = {
         reject(err)
       }
       if (topic) {
+        console.log("Quiz about " + topic )
         waiting = "true"
-        toBeAsked = [{"asked": "false"}]
         questions = []
-         questions.push(topic)
-          d => (topic ? d.topic.toLowerCase().indexOf(topic.toLowerCase()) >= 0 : true)
+        questions.push(result)
+        d => (topic ? d.topic.toLowerCase().indexOf(topic.toLowerCase()) >= 0 : true)
 
-        for (i = 0; i < questions.length; i++) {
-          if (questions[i].asked == false) {
-            toBeAsked.push(questions[i])
-          }
-        }
         for (i = 0; i < 5; i++) {
-          if (toBeAsked[i].asked == false) {
-            console.log(toBeAsked[i])
+          if (result[i]) {
+            
+            console.log(result[i])
           }
-          console.log(toBeAsked[i])
-         return (toBeAsked[i])
+          
+
 
         }
+      } else {
+        console.log('not a valid topic')
       }
+      return (questions[i])
 
     });
 
@@ -78,9 +77,9 @@ let sqlRepo = {
     //   (question, answer, topic, asked)  
     //   VALUES
 
-//     resolve(result);
-//   });
-// },
+    //     resolve(result);
+    //   });
+    // },
 
   }
 };

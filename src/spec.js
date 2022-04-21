@@ -1,7 +1,7 @@
 // Bot API action constants
 module.exports = Object.freeze({
   identifier: "quiz",
-  actions: ["get","searchTopic","insert","searchScores","power_on","power_off"],
+  actions: ["get","searchTopic","insert","searchScores"],
   schema: {
     searchTopic: {
       arg_count: 1,
@@ -32,30 +32,6 @@ module.exports = Object.freeze({
       ]
     },
     searchScores: {
-      arg_count: 1,
-      args: [
-        {
-          name: "name",
-          type: "string",
-          min: 3,
-          max: 15,
-          pattern: "alphanumeric"
-        }
-      ]
-    },
-    power_on: {
-      arg_count: 1,
-      args: [
-        {
-          name: "name",
-          type: "string",
-          min: 3,
-          max: 15,
-          pattern: "alphanumeric"
-        }
-      ]
-    },
-    power_off: {
       arg_count: 1,
       args: [
         {

@@ -5,7 +5,7 @@
    app.get('/api/test', (req, res, next) => {
  
 
-    searchTopic("node")
+    searchTopic("general")
 
 console.log("hello")
 
