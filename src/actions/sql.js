@@ -24,25 +24,24 @@ exports.func = req => {
                 query = "SELECT * FROM quiz_table", function (err, result, fields) {
                     if (err) {
                         reject(err)
-                    } else{
+                    } else {
                         resolve(`"status": "success", "status_message": "Question", "discord_message": "` + result + `"`);
                     }
-                   
-                }
 
+                }
                 break;
             case "searchTopic":
 
-                query = `SELECT * FROM quiz_table WHERE topic="${topic}"`, function (err, result, fields) {
+                query = `SELECT * FROM quiz_table WHERE topic="${params[2]}"`, function (err, result, fields) {
                     if (err) {
                         reject(err)
                     }
-                    if (topic) {
-                        console.log("Quiz about " + topic)
+                    if (params[2]) {
+                        console.log("Quiz about " + params[2])
                         waiting = "true"
                         questions = []
                         questions.push(result)
-                        d => (topic ? d.topic.toLowerCase().indexOf(topic.toLowerCase()) >= 0 : true)
+                        d => (params[2] ? d.params[2].toLowerCase().indexOf(params[2].toLowerCase()) >= 0 : true)
                         for (i = 0; i < 5; i++) {
                             if (result[i]) {
                                 resolve(`"status": "success", "status_message": "Question", "discord_message": "` + questions[i].question + `"`);

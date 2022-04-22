@@ -1,23 +1,31 @@
+/**
+ * @openapi
+ * /api/validate/{command}:
+ *  get:
+ *    description: Validate the bot command being used with this API
+ *    produces:
+ *     - application/json
+ *    parameters:
+ *     - name: command
+ *       in: path
+ *       required: true
+ *       type: string    
+ *    responses:
+ *       200:
+ *         description: Returns JSON document with validation results
+ */
 
-
- var {searchTopic} = require('../repos/test.js')
+ var function_module = require('../actions/sql.js')
  module.exports = function (app) {
-   app.get('/api/test', (req, res, next) => {
+   app.get('/api/command/:command', (req, res, next) => {
  
-
-    searchTopic("general")
-
-console.log("hello")
-
-
-
-
-
-
-
-
-
-    res.json({blah: "blah"})
+     var getResponse = function_module.func(req)
+     getResponse.then((response) => {
+       res.send(response)
+     }).catch(err => {
+       res.send(err)
+     })
  
    })
  }
+
