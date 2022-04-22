@@ -24,8 +24,10 @@ exports.func = req => {
                 query = "SELECT * FROM quiz_table", function (err, result, fields) {
                     if (err) {
                         reject(err)
+                    } else{
+                        resolve(`"status": "success", "status_message": "Question", "discord_message": "` + result + `"`);
                     }
-                    resolve(`"status": "success", "status_message": "Question", "discord_message": "` + result + `"`);
+                   
                 }
 
                 break;
@@ -62,10 +64,11 @@ exports.func = req => {
                     if (individual) {
                         questions = questions.filter(
                             d => (individual ? d.individual.toLowerCase().indexOf(individual.toLowerCase()) >= 0 : true))
-                    }
-                    resolve({ "status": "success", "status_message": "individual_found", "discord_message": result });
 
-                   
+                        resolve({ "status": "success", "status_message": "individual_found", "discord_message": result });
+                    }
+
+
                 }
 
                 break;
