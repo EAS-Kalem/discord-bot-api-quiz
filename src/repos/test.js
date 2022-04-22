@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const Promise = require('promise');
 
 
 var connection = mysql.createConnection({
