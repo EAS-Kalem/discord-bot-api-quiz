@@ -69,7 +69,7 @@ exports.func = req => {
                     }
                 })
                 break;
-            case "insert":
+            case "insertquestion":
                 console.log('bob')
                 query = `INSERT INTO quiz_table
                 (question, answer, topic, asked) 
@@ -79,7 +79,22 @@ exports.func = req => {
                     if (err) {
                         reject(err)
                     }
-                    resolve({ "status": "success", "status_message": "sucsess", "discord_message": "uploaded" + result });
+                    resolve({ "status": "success", "status_message": "Question added", "discord_message": "uploaded" + result });
+                });
+
+                break;
+
+            case "insertindividual":
+                console.log('bob')
+                query = `INSERT INTO scores_table
+                (individual, totalQuestions, totalScore) 
+                 VALUES (?, 0, 0)`;
+
+                connection.query(query, rest, function (err, result, fields) {
+                    if (err) {
+                        reject(err)
+                    }
+                    resolve({ "status": "success", "status_message": "Individual added", "discord_message": "added" + result });
                 });
 
                 break;
