@@ -1,4 +1,4 @@
-const Promise = require('promise');
+//const Promise = require('promise');
 const mysql = require('mysql');
 
 
@@ -13,73 +13,78 @@ connection.connect();
 
 
 exports.func = req => {
+    console.log('monkey')
     return new Promise((resolve, reject) => {
-        let params = req.params.command.split(",");
-        console.log("params 1 = " + params);
+        let [botName, action, ...rest] = req.params.command.split(",");
+        console.log('monkey2')
 
         let query = "";
 
-        switch (params[1]) {
+        switch (action) {
             case "get":
-                query = "SELECT * FROM quiz_table", function (err, result, fields) {
+                connection.query("SELECT * FROM quiz_table", function (err, result, fields) {
                     if (err) {
                         reject(err)
                     } else {
-                        resolve(`"status": "success", "status_message": "Question", "discord_message": "` + result + `"`);
+                        resolve({ "status": "success", "status_message": "Question", "discord_message": result });
                     }
 
-                }
+                })
                 break;
             case "searchTopic":
-
-                query = `SELECT * FROM quiz_table WHERE topic="${params[2]}"`, function (err, result, fields) {
+                connection.query(`SELECT * FROM quiz_table WHERE topic="${rest.join(" ")}"`, function (err, result, fields) {
                     if (err) {
+                        console.log(err)
                         reject(err)
                     }
-                    if (params[2]) {
-                        console.log("Quiz about " + params[2])
-                        waiting = "true"
-                        questions = []
-                        questions.push(result)
-                        d => (params[2] ? d.params[2].toLowerCase().indexOf(params[2].toLowerCase()) >= 0 : true)
-                        for (i = 0; i < 5; i++) {
-                            if (result[i]) {
-                                resolve(`"status": "success", "status_message": "Question", "discord_message": "` + questions[i].question + `"`);
-                                console.log(result[i])
-                            }
+                    if (rest.join(" ")) {
+                        console.log("Quiz about " + rest.join(" "))
+                        // waiting = "true"
+                        // questions = []
+                        // questions.push(result)
+                        var message = " ";
+                        for (i = 0; i < result.length; i++) {
+                            message += result[i].question + "\n"
+
+
                         }
+                        resolve({ "status": "success", "status_message": "Question", "discord_message": message });
                     } else {
                         console.log('not a valid topic')
                     }
 
-                }
+                });
 
                 break;
             case "searchScores":
-                query = `SELECT * FROM individual_table WHERE individual="${individual}"`, function (err, result, fields) {
+                connection.query(`SELECT * FROM scores_table WHERE individual="${rest.join(" ")}"`, function (err, result, fields) {
                     if (err) {
                         reject(err)
                     }
-                    if (individual) {
-                        questions = questions.filter(
-                            d => (individual ? d.individual.toLowerCase().indexOf(individual.toLowerCase()) >= 0 : true))
+                    if (rest.join(" ")) {
+
+
 
                         resolve({ "status": "success", "status_message": "individual_found", "discord_message": result });
                     }
+                })
+                break;
+            case "insert":
+                console.log('bob')
+                query = `INSERT INTO quiz_table
+                (question, answer, topic, asked) 
+                 VALUES (?, ?, ?, ?)`;
 
-
-                }
+                connection.query(query, rest, function (err, result, fields) {
+                    if (err) {
+                        reject(err)
+                    }
+                    resolve({ "status": "success", "status_message": "sucsess", "discord_message": "uploaded" + result });
+                });
 
                 break;
             default:
             // code block
         }
-
-        //connection.end();  ?? where do you go??
-
-
     });
-
-
-
 }

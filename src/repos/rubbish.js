@@ -40,8 +40,8 @@
 //     });
 //   },
 
-//   //GET 5 QUIZ QUESTIONS BY TOPIC
-//   //GET from quiz_table DB
+  //GET 5 QUIZ QUESTIONS BY TOPIC
+  //GET from quiz_table DB
 //   searchTopic: function (topic, resolve, reject) {
 //     connection.query(`SELECT * FROM quiz_table WHERE topic="${topic}"`, function (err, result, fields) {
 //       if (err) {

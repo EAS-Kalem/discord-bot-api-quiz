@@ -18,7 +18,7 @@
  var function_module = require('../actions/sql.js')
  module.exports = function (app) {
    app.get('/api/command/:command', (req, res, next) => {
- 
+
      var getResponse = function_module.func(req)
      getResponse.then((response) => {
        res.send(response)

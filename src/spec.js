@@ -20,7 +20,7 @@ module.exports = Object.freeze({
       args:[]
     },
     insert: {
-      arg_count: 1,
+      arg_count: 4,
       args: [
         {
           name: "name",
