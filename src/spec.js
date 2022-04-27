@@ -2,28 +2,42 @@
 module.exports = Object.freeze({
   identifier: "quiz",
   actions: [
-    "owner",
     "actions",
-    "get",
-    "searchTopic",
-    "searchScores",
-    "insertQuestion",
-    "insertIndividual",
+    "create",
+    "continue",
+    "answer",
+    "searchscores",
+    "insertquestion",
+    "insertindividual",
+    "end",
+    
+    "owner"
   ],
   schema: {
-    searchTopic: {
-      arg_count: 1,
+    continue: {
+      arg_count: 0,
+      args: []
+    },
+    end: {
+      arg_count: 0,
+      args: []
+    },
+    create: {
+      arg_count: 2,
       args: [
         {
-          name: "name",
+          name: "topic",
           type: "string",
-          min: 3,
-          max: 15,
+          pattern: "alphanumeric"
+        },
+        {
+          name: "question_count",
+          type: "number",
           pattern: "alphanumeric"
         }
       ]
     },
-    
+
     owner: {
       arg_count: 0,
       args: []
@@ -39,7 +53,7 @@ module.exports = Object.freeze({
       args: []
     },
 
-    insertQuestion: {
+    insertquestion: {
       arg_count: 4,
       args: [
         {
@@ -52,7 +66,7 @@ module.exports = Object.freeze({
       ]
     },
 
-    insertIndividual: {
+    insertindividual: {
       arg_count: 1,
       args: [
         {
@@ -64,21 +78,17 @@ module.exports = Object.freeze({
         }
       ]
     },
-
-    searchScores: {
+    answer: {
       arg_count: 1,
       args: [
         {
-          name: "name",
+          name: "answer",
           type: "string",
-          min: 3,
-          max: 15,
           pattern: "alphanumeric"
         }
       ]
     },
-
-    searchIndividual: {
+    searchscores: {
       arg_count: 1,
       args: [
         {

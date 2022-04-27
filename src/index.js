@@ -17,7 +17,7 @@ const path = require("path");
   });
   
 
-app.listen(9000, () => {
-    console.log('Node server is running on port 9000');
+app.listen(3000, () => {
+    console.log('Node server is running on port 3000');
 })
 
