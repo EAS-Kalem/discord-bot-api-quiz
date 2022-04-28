@@ -2,8 +2,10 @@
 const res = require('express/lib/response');
 const mysql = require('mysql');
 const { actions } = require('../spec');
-const fs = require('fs');
+const axios = require('axios').default;
 const util = require('util');
+const { memoryUsage } = require('process');
+
 
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -26,42 +28,70 @@ exports.func = req => {
 
 
             switch (action) {
+                case "stats":
+                    const previousUsage = process.cpuUsage();
+                    // { user: 38579, system: 6986 }
 
+                    // spin the CPU for 500 milliseconds
+                    const startDate = Date.now();
+                    while (Date.now() - startDate < 500);
 
+                    // At this moment you can expect result 100%
+                    // Time is *1000 because cpuUsage is in us (microseconds)
+                    const usage = process.cpuUsage(previousUsage);
+                    const memory = process.memoryUsage(previousUsage);
+
+                    const usageResult = 100 * (usage.user + usage.system) / ((Date.now() - startDate) * 1000)
+
+                    console.log(usageResult);
+
+                    // set 2 sec "non-busy" timeout
+                    var heapFree = 0
+                    setTimeout(function () {
+                        console.log(usage.heapTotal);
+                        console.log(memory.heapTotal);
+                        console.log(memory.heapUsed);
+
+                    }, 2000);
+                    heapFree += parseInt(memory.heapTotal) - parseInt(memory.heapUsed)
+                    resolve({ "status": "success", "status_message": "Question", "discord_message": "CPU " + usageResult + "\n Memory used" + process.memoryUsage(previousUsage).heapUsed + "\n Memory free" + heapFree });
+                    break;
+                //DONE
                 case "owner":
-                    resolve({ "status": "success", "status_message": "Get owner", "discord_message": "Karen hale" });
+                    resolve({ "status": "success", "status_message": "Get owner", "discord_message": "Kalem Hale" });
                     break;
-
-
-                case "actions":
-                    resolve({ "status": "success", "status_message": "Get all actions", "discord_message": "'Actions' n\ Get All: 'get' n\ Quiz By Topic: 'searchtopic topic' n\ Search Scores: 'searchscores kalem' n\ Insert New Question: 'insertquestion question answer topic' n\ Insert New User: 'insertIndividual Liam' n\ Owner: 'owner'" });
-                    break;
-
-
+                //NOT DONE*************************
                 case "get":
                     connection.query("SELECT * FROM quiz_table", function (err, result, fields) {
                         if (err) {
-                            reject(err)
+                            reject({ "status": "unsuccsessful", "status_message": "Unable to get questions", "discord_message": "Unable to get questions" })
                         } else {
-                            resolve({ "status": "success", "status_message": "Question", "discord_message": result });
+                            resolve({ "status": "success", "status_message": "Get all questions", "discord_message": result });
                         }
                     })
+
                     break;
 
-
+                //DONE
                 case "actions":
-                    resolve({ "status": "success", "status_message": "Question", "discord_message": "'Actions' n\ Get All: 'get' n\ Quiz By Topic: 'searchtopic topic' n\ Search Scores: 'searchscores kalem' n\ Insert New Question: 'insertquestion question answer topic' n\ Insert New User: 'insertIndividual Liam'" });
+                    
+                    resolve({ 
+                        "status": "success",
+                         "status_message": "Question",
+                          "discord_message": "**ACTIONS** \n\n**Quiz Actions**\n**Create By Topic:**\ `!quiz start <topic> <numberOfQuestions>\`\n**Continue quiz:**\ `!quiz continue\` \n**Answer question:** \ `!quiz answer <answer>\`\n**End quiz:**\ `!quiz end\`\n\n**Other Actions**\n**Valid Actions:**\ `!quiz actions\`\n**Search your data:**\ `!quiz scores\`\n**Insert new question:**\ `!quiz insert <topic> <question> | <answer>\`\n**Quiz creator:**\ `!quiz owner\`\n**Get topics:**\ `!quiz topics\`" });
                     break;
 
-
+                //DONE
                 case "answer":
+                    console.log('bob')
                     let [quizzExists] = await query(`
                     SELECT * FROM quizzes WHERE active = 1
                 `)
-                if (!quizzExists) {
-                    return reject({ "status": "unsucsessful", "status_message": "quiz in progress", "discord_message": "There is no quiz in progress. `!quiz create <topic> <question_count>`?" });
 
-                }
+                    if (!quizzExists) {
+                        return reject({ "status": "unsucsessful", "status_message": "quiz in progress", "discord_message": "There is no quiz in progress. `!quiz start <topic> <question_count>`?" });
+
+                    }
                     console.log('hit')
                     let [userAnswer] = await query(
                         `SELECT * FROM quiz_users
@@ -71,9 +101,9 @@ exports.func = req => {
                         // create the user
                         let { insertId } = await query(
                             `INSERT INTO quiz_users
-                    (nickname) 
-                    VALUES
-                    (?)`, req.headers.user)
+                            (nickname) 
+                            VALUES
+                            (?)`, req.headers.user)
                         userIDAnswer = insertId
                     } else {
                         userIDAnswer = userAnswer.id
@@ -81,21 +111,19 @@ exports.func = req => {
 
                     let [currentQuestion] = await query(
                         `SELECT quiz_questions.id as quiz_question_id, lu_questions.answer FROM quizzes
-                    INNER JOIN quiz_questions
-                    ON quiz_questions.quiz_id = quizzes.id
-                    INNER JOIN lu_questions
-                    ON quiz_questions.question_id = lu_questions.id
-
-                    WHERE asked = 1 AND active = 1
-
-                    ORDER BY quiz_questions.id DESC
-                    LIMIT 1
-                `)
+                        INNER JOIN quiz_questions
+                        ON quiz_questions.quiz_id = quizzes.id
+                        INNER JOIN lu_questions
+                        ON quiz_questions.question_id = lu_questions.id
+                        WHERE asked = 1 AND active = 1
+                        ORDER BY quiz_questions.id DESC
+                        LIMIT 1
+                `   )
                     let [checkIfAnswered] = await query(
                         `SELECT * FROM quiz_answers
-                    WHERE quiz_question_id=? && user_id = ?`, [currentQuestion.quiz_question_id, userIDAnswer])
+                        WHERE quiz_question_id=? && user_id = ?`, [currentQuestion.quiz_question_id, userIDAnswer])
                     if (checkIfAnswered) {
-                        return reject({ "status": "unsucsessful", "status_message": "quiz in progress", "discord_message": "You have already answered this question you dickhead." });
+                        return reject({ "status": "unsucsessful", "status_message": "quiz in progress", "discord_message": "You have already answered this question " +req.headers.user +" you dickhead." });
 
                     }
                     let answer = rest.join(" ")
@@ -113,8 +141,8 @@ exports.func = req => {
 
                     break;
 
-
-                case "create":
+                //DONE
+                case "start":
                     let [quizExists] = await query(`
                 SELECT * FROM quizzes WHERE active = 1
             `)
@@ -174,16 +202,15 @@ exports.func = req => {
                         "discord_message": questions[0].question,
                         "callback": {
                             timeout: 30,
-                            command: "quiz,continue"
+                            command: "!quiz continue"
                         }
                     });
 
 
                     break;
 
-
+                //DONE
                 case "continue":
-
                     let [quizExist] = await query(`
                         SELECT * FROM quizzes WHERE active = 1
                     `)
@@ -202,13 +229,14 @@ exports.func = req => {
                     
                     LIMIT 1`, )
 
-
-
                     if (!question) {
+
+
                         let results = await query(`
-                            SELECT quiz_answers.result, quiz_users.nickname, quiz_users.id as user_id FROM quiz_answers
+                            SELECT quiz_answers.result, lu_questions.question, quiz_answers.answer, quiz_users.nickname, quiz_users.id as user_id FROM quiz_answers
                             JOIN quiz_users ON quiz_users.id = quiz_answers.user_id
                             JOIN quiz_questions ON quiz_questions.id = quiz_answers.quiz_question_id
+                            JOIN lu_questions ON quiz_questions.question_id = lu_questions.id
                             JOIN quizzes ON quizzes.id = quiz_questions.quiz_id
                             WHERE active = 1
                         `)
@@ -217,15 +245,71 @@ exports.func = req => {
                             UPDATE quizzes
                             SET 
                             active = 0
-                            WHERE
-                            active = 1;
-                        `);
+                            
+                            WHERE active = 1
+                        `)
 
-                        fs.writeFileSync( results.JSON, results,utf8 )
-                        resolve({ "status": "success", "status_message": "quiz", "discord_message": JSON.stringify(results) });
+                        for (i = 0; i < results.length; i++) {
+
+                            let [user] = await query(`
+                                SELECT * FROM scores_table
+                                WHERE user_id = ?
+                            `, results[i].user_id)
+
+                            if (!user) {
+                                let { insertId } = await query(`
+                                    INSERT INTO scores_table
+                                    (user_id, totalQuestions, totalScore)
+                                    VALUES
+                                    (?, 0, 0)
+                                `, results[i].user_id)
+                            }
+
+                            if (results[i].result) {
+
+                                await query(`
+                                    UPDATE scores_table
+                                    SET 
+                                    totalQuestions = totalQuestions + 1,
+                                    totalScore = totalScore + 1
+                                    WHERE user_id = ?
+                                `, results[i].user_id)
+
+                            } else {
+                                await query(`
+                                    UPDATE scores_table
+                                    SET 
+                                    totalQuestions = totalQuestions + 1
+                                    WHERE user_id = ?
+                                `, results[i].user_id)
+                            }
+
+                        }
+
+
+
+
+                        let questionsMap = {}
+
+                        results.map(result => {
+                            if (!questionsMap[result.question]) {
+                                questionsMap[result.question] = []
+                            }
+                            questionsMap[result.question].push(`${result.nickname} answered with ${result.answer}.${result.result ? ':white_check_mark:' : ':red_square:'}`)
+                        })
+
+                        let resultMessage = ""
+                        for (let key in questionsMap) {
+                            resultMessage += `**Q: ${key}**\n`
+                            resultMessage += questionsMap[key].join("\n")
+                            resultMessage += "\n\n"
+                        }
+
+                        resolve({ "status": "success", "status_message": "quiz", "discord_message": resultMessage });
 
                     } else {
                         let { question: question_text, quiz_question_id } = question
+
                         await query(`
                             UPDATE quiz_questions
                             SET 
@@ -233,17 +317,25 @@ exports.func = req => {
                             WHERE
                             id =?;
                         `, quiz_question_id)
-                        resolve({ "status": "success", "status_message": "quiz", "discord_message":question_text  });
+
+                        resolve({
+                            "status": "success",
+                            "status_message": "quiz",
+                            "discord_message": question_text,
+                            "callback": {
+                                timeout: 30,
+                                command: "!quiz continue"
+                            }
+                        });
 
                     }
-
-
                     break;
-              
 
 
+                
 
-                case "searchscores":
+
+                case "scores":
                     let [userScore] = await query(
                         `SELECT * FROM quiz_users
                     WHERE nickname=?`, req.headers.user)
@@ -251,50 +343,81 @@ exports.func = req => {
                     console.log(userScore.id)
 
                     let [userIdSearch] = await query(
-                        `SELECT * FROM scoresTable
-                        WHERE`
+                        `SELECT * FROM scores_table
+                        WHERE id=?`, userScore.id
                     )
                     if (userScore) {
-                        resolve({ "status": "success", "status_message": "User found", "discord_message": userScore.name });
+                        resolve({ "status": "success", "status_message": "User found", "discord_message": "\n " + "****" + req.headers.user + "**** ****s Stats\nYour score is ****" + JSON.stringify(userIdSearch.totalScore) + "\n****You have answered a total of**** " + JSON.stringify(userIdSearch.totalQuestions) + " questions" });
                     }
 
                     break;
 
-                case "insertquestion":
-                    if (user == admin) {
-                        console.log('bob')
-                        query = `INSERT INTO quiz_table
-                (question, answer, topic, asked) 
-                 VALUES (?, ?, ?, ?)`;
 
-                        connection.query(query, rest, function (err, result, fields) {
-                            if (err) {
-                                reject(err)
-                            }
-                            resolve({ "status": "success", "status_message": "Question added", "discord_message": "uploaded" + result });
-                        });
+                case "end":
+                    await query(`
+                        UPDATE quizzes
+                        SET 
+                        active = 0
+                        WHERE
+                        active = 1;`)
+                    resolve({ "status": "success", "status_message": "User found", "discord_message": "Quiz has been ended" });
+                    break
+
+
+
+
+                        let [something, ...second] = ["dsadas", "dsadsad", "dsadsasd"]
+
+                        console.log(something) // dsadas
+                        console.log(second) // ["dsadsad", "dsadsasd"]
+
+
+
+
+
+            case "topics":
+                let findAllTopics = await query(`
+                SELECT topic FROM lu_topics `)
+              let str = "**List of all available topics** \n"
+                for (i=0; i<findAllTopics.length; i++){
+                    str +=  findAllTopics[i].topic + "\n"
+                 
+                    console.log(findAllTopics[i].topic)
+                }
+   
+    resolve({ "status": "success", "status_message": "User found", "discord_message": str });
+                
+                break
+
+                case "insert":
+                    //insert <topic> <question> <answer>
+                    let [topic, ...questionAnswer] = rest
+                    let [theQuestion, theAnswer] = questionAnswer.join(" ").split("|");
+
+                    let [findTopic] = await query(`
+                    SELECT * FROM lu_topics WHERE topic=?
+                    `, topic);
+                    let topicId
+                    if(!findTopic){
+                        let {insertId} = await query(`
+                            INSERT INTO lu_topics
+                            (topic) 
+                            VALUES (?)
+                        `, rest[0]);
+                        topicId = insertId
                     } else {
-                        resolve({ "status": "unsucsessful", "status_message": "Unauthorized", "discord_message": "You do not have the right permissions to add questions" });
+                        topicId = findTopic.id
                     }
+                    let addQuestions = await query(`
+                    INSERT INTO lu_questions
+                    ( topic_id,question, answer) 
+                     VALUES (?, ?, ?)`, [topicId, theQuestion.trim(), theAnswer.trim()]);
+
+                        resolve({ "status": "success", "status_message": "Question added", "discord_message": `Added the question: "${theQuestion}"` });
+                    
+
                     break;
 
-                case "insertindividual":
-                    if (user == admin) {
-                        console.log('bob')
-                        query = `INSERT INTO scores_table
-                (individual, totalQuestions, totalScore) 
-                 VALUES (?, 0, 0)`;
-
-                        connection.query(query, rest, function (err, result, fields) {
-                            if (err) {
-                                reject(err)
-                            }
-                            resolve({ "status": "success", "status_message": "Individual added", "discord_message": "added" + result });
-                        });
-                    } else {
-                        resolve({ "status": "unsucsessful", "status_message": "Unauthorized", "discord_message": "You do not have the right permissions to add users" });
-                    };
-                    break;
 
                 default:
                 // code block

@@ -4,12 +4,3 @@ CREATE TABLE  quiz_users (
     nickname             VARCHAR(256) NOT NULL,
   PRIMARY KEY (`id`)
 );
-
-INSERT INTO  quiz_users
-  (nickname) 
-VALUES
-(
-    'Apwils'
-),(   
-   'kalem77'
-);

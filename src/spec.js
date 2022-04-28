@@ -3,15 +3,15 @@ module.exports = Object.freeze({
   identifier: "quiz",
   actions: [
     "actions",
-    "create",
+    "start",
     "continue",
     "answer",
-    "searchscores",
-    "insertquestion",
-    "insertindividual",
+    "scores",
+    "insert",
     "end",
-    
-    "owner"
+    "stats",
+    "owner",
+    "topics"
   ],
   schema: {
     continue: {
@@ -22,7 +22,7 @@ module.exports = Object.freeze({
       arg_count: 0,
       args: []
     },
-    create: {
+    start: {
       arg_count: 2,
       args: [
         {
@@ -37,7 +37,16 @@ module.exports = Object.freeze({
         }
       ]
     },
-
+    answer: {
+      arg_count: 1,
+      args: [
+        {
+          name: "answer",
+          type: "string",
+          pattern: "alphanumeric"
+        }
+      ]
+    },
     owner: {
       arg_count: 0,
       args: []
@@ -53,8 +62,12 @@ module.exports = Object.freeze({
       args: []
     },
 
-    insertquestion: {
-      arg_count: 4,
+    topics:{
+      arg_count: 0,
+      args: []
+    },
+    insert: {
+      arg_count: 3,
       args: [
         {
           name: "name",
@@ -65,39 +78,13 @@ module.exports = Object.freeze({
         }
       ]
     },
-
-    insertindividual: {
-      arg_count: 1,
-      args: [
-        {
-          name: "name",
-          type: "string",
-          min: 3,
-          max: 15,
-          pattern: "alphanumeric"
-        }
-      ]
+    stats: {
+      arg_count: 0,
+      args: []
     },
-    answer: {
+    scores: {
       arg_count: 1,
       args: [
-        {
-          name: "answer",
-          type: "string",
-          pattern: "alphanumeric"
-        }
-      ]
-    },
-    searchscores: {
-      arg_count: 1,
-      args: [
-        {
-          name: "name",
-          type: "string",
-          min: 3,
-          max: 15,
-          pattern: "alphanumeric"
-        }
       ]
     }
   }

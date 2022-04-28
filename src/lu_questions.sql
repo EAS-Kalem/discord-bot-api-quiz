@@ -13,27 +13,27 @@ VALUES
 (
     1,
     'What command do you use to commit using git?',
-    'Git commit'
+    'git commit'
 ),(   
     3,
     'What is a popular package manager used for a mac?',
-    'Homebrew'
+    'homebrew'
 ),(
     5,
     'What does the linux command ls do?',
-    'List files in current directory'
+    'list files in current directory'
 ),(
     3,
     'What OS is chocolatey used on?',
-    'Windows'
+    'windows'
 ),(
     5,
     'What does mkdir do as a linux command?',
-    'Make a directory'
+    'make a directory'
 ),(
     3,
     'What is a docker container?',
-    'A isolated enviroment for running an app'
+    'a isolated enviroment for running an app'
 ),(
     2,
     'How would you check your node version?',
@@ -41,27 +41,27 @@ VALUES
 ),(  
    6,
     'What is docker?',
-    'A platform for building running and shipping containers'
+    'a platform for building running and shipping containers'
 ),(
     5,
     'Does linux use forward slashes or back slashes?',
-    'Forward'
+    'forward'
 ),(
     5,
     'What does CD linux command do?',
-    'Change directory'
+    'change directory'
 ),(
     1,
     'What GIT command would you use to create a directory?',
-    'Git init'
+    'git init'
 ),(
     1,
     'What is GIT?',
-    'A version control system'
+    'a version control system'
 ),(
     7,
     'What is kubernetes used for?',
-    'Application deployment'
+    'application deployment'
 ),(
     3,
     'What is the fastest way to find anything on a MAC?',
@@ -69,5 +69,5 @@ VALUES
 ),(
     2,
     'What is NPM?',
-    'Node package manager'
+    'node package manager'
 );

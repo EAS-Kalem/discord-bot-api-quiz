@@ -7,15 +7,3 @@ CREATE TABLE scores_table (
   PRIMARY KEY (`id`)
 );
 
-INSERT INTO scores_table 
-  (user_id, totalQuestions, totalScore ) 
-VALUES
-( 
-    1,
-    0,
-    0  
-),(
-    2,
-    0,
-    0
-);
