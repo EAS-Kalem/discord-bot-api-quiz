@@ -28,34 +28,67 @@ exports.func = req => {
 
 
             switch (action) {
-                case "stats":
-                    const previousUsage = process.cpuUsage();
-                    // { user: 38579, system: 6986 }
+    //             case "stats":
+    //                 var usage = process.cpuUsage();
+    //                 usage = process.cpuUsage(usage);
+    //                 const memoryData = process.memoryUsage();  
+    //                 var ut_sec = os.uptime();
+    //                 var ut_min = ut_sec/60;
+    //                 var ut_hour = ut_min/60;
+       
+    //                 ut_sec = Math.floor(ut_sec);
+    //                 ut_min = Math.floor(ut_min);
+    //                 ut_hour = Math.floor(ut_hour);
+    //                 ut_hour = ut_hour%60;
+    //                 ut_min = ut_min%60;
+    //                 ut_sec = ut_sec%60;
+    //                 let diskFree;
+    //                 let diskTotal;
+                    
+    //                 disk.check('/', function(err, info) {
+    //                     diskFree = info.free;
+    //                     diskTotal = info.total;
+    //                 });
 
-                    // spin the CPU for 500 milliseconds
-                    const startDate = Date.now();
-                    while (Date.now() - startDate < 500);
 
-                    // At this moment you can expect result 100%
-                    // Time is *1000 because cpuUsage is in us (microseconds)
-                    const usage = process.cpuUsage(previousUsage);
-                    const memory = process.memoryUsage(previousUsage);
+    //                 resolve({"status": "success", "status_message": "sending back image", "discord_message": `**Stats:**
+    //                 \n**Rss:**\ ${formatBytes(memoryData.rss)} Total memory allocated for the process execution
+                    
+    //                 \n**HeapTotal:**\ ${formatBytes(memoryData.heapTotal)}  Total size of the allocated heap
 
-                    const usageResult = 100 * (usage.user + usage.system) / ((Date.now() - startDate) * 1000)
+    //                 \n**HeapUsed:**\ ${formatBytes(memoryData.heapUsed)} Actual memory used during the execution
+                    
+    //                 \n**Total memory:**\ ${formatBytes(os.totalmem())}
 
-                    console.log(usageResult);
+    //                 \n**Free memory:**\ ${formatBytes(os.freemem())}
+                
+    //                 \n**CPU:**\ ${usage.user} Mhz cpu used during the execution
 
-                    // set 2 sec "non-busy" timeout
-                    var heapFree = 0
-                    setTimeout(function () {
-                        console.log(usage.heapTotal);
-                        console.log(memory.heapTotal);
-                        console.log(memory.heapUsed);
+    //                 \n**CPUS:**\ ${os.cpus().length}
+                    
+    //                 \n**Disk free**\ ${formatBytes(diskFree)}                    \n**Disk total**\ ${formatBytes(diskTotal)}
 
-                    }, 2000);
-                    heapFree += parseInt(memory.heapTotal) - parseInt(memory.heapUsed)
-                    resolve({ "status": "success", "status_message": "Question", "discord_message": "CPU " + usageResult + "\n Memory used" + process.memoryUsage(previousUsage).heapUsed + "\n Memory free" + heapFree });
-                    break;
+    //                 \n**Disk used**\ ${formatBytes(diskTotal - diskFree)}
+                    
+    //                 \n**Up time:**\ ${ut_hour} Hour(s) ${ut_min} minute(s) and ${ut_sec} second(s)
+    //                 `
+    //             });
+    //         }
+    //     })
+    // };
+    
+    // function formatBytes(bytes, decimals = 2) {
+    //     if (bytes === 0) return '0 Bytes';
+    
+    //     const k = 1024;
+    //     const dm = decimals < 0 ? 0 : decimals;
+    //     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    
+    //     const i = Math.floor(Math.log(bytes) / Math.log(k));
+    
+    //     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  //  }
+  //  break;
                 //DONE
                 case "owner":
                     resolve({ "status": "success", "status_message": "Get owner", "discord_message": "Kalem Hale" });
@@ -156,7 +189,7 @@ exports.func = req => {
                 ON lu_topics.id=lu_questions.topic_id
                 WHERE topic=?
             `, rest[0])
-                    console.log(rest[0])
+                    console.log("this" +rest[0])
                     let currentIndex = rows.length, randomIndex;
                     while (currentIndex != 0) {
                         randomIndex = Math.floor(Math.random() * currentIndex);

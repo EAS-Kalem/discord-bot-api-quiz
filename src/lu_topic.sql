@@ -22,4 +22,6 @@ VALUES
     'docker'
 ),(
     'kubernetes'
-);
+),(
+   'fun'
+)

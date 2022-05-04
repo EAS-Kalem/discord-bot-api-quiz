@@ -6,10 +6,3 @@ CREATE TABLE quizzes (
   PRIMARY KEY (`id`)
 );
 
--- INSERT INTO quizzes
---   (user_id , active) 
--- VALUES
--- (
---     2,
---     'true'
--- );
