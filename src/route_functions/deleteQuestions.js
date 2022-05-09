@@ -17,19 +17,14 @@ const query = util.promisify(connection.query).bind(connection);
 
 exports.func = req => {
     return new Promise(async (resolve, reject) => {
-        try {
-            let questions = await query(`
-            SELECT * FROM lu_topic
-            INNER JOIN lu_questions
-            ON lu_topic.id=lu_questions.topic_id
-           
-        `)
-            console.log(questions)
-            resolve(questions)
-
-        } catch (err) {
-            reject("something went wrong!")
-        }
-
+      
+                    let deleteQuestions = await query(`
+                    DELETE FROM lu_questions
+                    WHERE id=?`, id);
+                    console.log("hello")
+                        resolve({deleteQuestions});
+                    
+   
+  
     })
 }

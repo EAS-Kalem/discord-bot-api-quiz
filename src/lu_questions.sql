@@ -19,7 +19,7 @@ VALUES
     'What is a popular package manager used for a mac?',
     'homebrew'
 ),(
-    5,
+    4,
     'What does the linux command ls do?',
     'list files in current directory'
 ),(
@@ -27,11 +27,11 @@ VALUES
     'What OS is chocolatey used on?',
     'windows'
 ),(
-    5,
+    4,
     'What does mkdir do as a linux command?',
     'make a directory'
 ),(
-    3,
+    5,
     'What is a docker container?',
     'a isolated enviroment for running an app'
 ),(
@@ -39,15 +39,15 @@ VALUES
     'How would you check your node version?',
     'node -v'
 ),(  
-   6,
+   5,
     'What is docker?',
     'a platform for building running and shipping containers'
 ),(
-    5,
+    4,
     'Does linux use forward slashes or back slashes?',
     'forward'
 ),(
-    5,
+    4,
     'What does CD linux command do?',
     'change directory'
 ),(
@@ -55,7 +55,7 @@ VALUES
     'What is GIT?',
     'a version control system'
 ),(
-    7,
+    6,
     'What is kubernetes used for?',
     'application deployment'
 ),(
@@ -77,11 +77,11 @@ VALUES
 ),(
     2,
     'Is the default scope in a node.js application Global or Local?',
-    'Local'
+    'local'
 ),(
     2,
     'Does a node js application run on single thread or multiple threads?',
-    'Single thread'
+    'single thread'
 ),(
     2,
     'Node.js modules can be exposed using _____?',
@@ -91,35 +91,35 @@ VALUES
     'In node third party packages can be installed/updated/deleted using ____',
     'node package manager'
 ),(
-    8,
+    7,
    'What artist has the most streams on Spotify?',
    'drake'
 ),(
-    8,
+    7,
     'What game studio makes the Red Dead Redemption series?',
     'rockstar'
 ),(
-    8,
+    7,
     'What country has won the most World Cups?',
     'brazil'
 ),(
-    8,
+    7,
     'What is the worlds fastest bird?',
     'the peregrine falcon'
 ),(
-    8,
+    7,
     'In what country is the Chernobyl nuclear plant located?',
     'ukraine'
 ),(
-    8,
+    7,
     'What is the name of the biggest technology company in South Korea?',
     'samsung'
 ),(
-    8,
+    7,
     'What is the name of the largest ocean on earth?',
     'pacific ocean'
 ),(
-    8,
+    7,
     'What was the first soft drink in space?',
     'coca cola'
 )

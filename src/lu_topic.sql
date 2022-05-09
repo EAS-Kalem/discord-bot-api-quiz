@@ -15,8 +15,6 @@ VALUES
 ),(
    'general'
 ),(
-   'kubernetes'
-),(
    'linux'
 ),(
     'docker'
